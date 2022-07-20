@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    GameObject player;
+    Transform target;
 
-    Vector3 offset;
     void Start()
     {
-        FindPlayer();
-        offset = player.transform.position - transform.position;
+        FindTarget();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     
     void LateUpdate()
     {
-        transform.position = player.transform.position - offset;
+        if (target!=null)
+        {
+            transform.position = target.position;
+            transform.rotation = target.rotation;
+        }
     }
 
-    void FindPlayer()
+    void FindTarget()
     {
-        player = GameObject.Find("Player");
+        target = GameObject.Find("CameraPoint").transform;
     }
 }
